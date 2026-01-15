@@ -9,7 +9,7 @@
 <body>
     <nav>
         <div class="container">
-            <h1>🍽️ Delicious Bites</h1>
+            <h1>🍽️ Dapoer Jeng Sri</h1>
             <ul>
                 <li><a href="#" onclick="showPage('home')">Home</a></li>
                 <li><a href="#" onclick="showPage('discounts')">Discounts</a></li>
@@ -23,7 +23,7 @@
     <div id="home" class="page">
         <div class="hero">
             <div class="container">
-                <h2>Welcome to Delicious Bites</h2>
+                <h2>Welcome to Dapoer Jengsri</h2>
                 <p>Experience the finest flavors from around the world</p>
                 <a href="#" onclick="showPage('discounts')" class="btn">View Special Offers</a>
             </div>
@@ -32,31 +32,18 @@
         <div class="content">
             <div class="container">
                 <h2 class="page-title">Our Popular Dishes</h2>
-                <div class="menu-grid">
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400" alt="Pizza">
-                        <div class="menu-item-content">
-                            <h3>Margherita Pizza</h3>
-                            <p>Fresh mozzarella, tomatoes, and basil on crispy crust</p>
-                            <p class="price">$12.99</p>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" alt="Burger">
-                        <div class="menu-item-content">
-                            <h3>Classic Burger</h3>
-                            <p>Juicy beef patty with lettuce, tomato, and special sauce</p>
-                            <p class="price">$9.99</p>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400" alt="Pasta">
-                        <div class="menu-item-content">
-                            <h3>Creamy Pasta</h3>
-                            <p>Al dente pasta in rich creamy sauce with herbs</p>
-                            <p class="price">$11.99</p>
-                        </div>
-                    </div>
+                <div class="menu-grid" id="food-grid">
+                    <!-- Food items will be loaded here -->
+                </div>
+
+                <h2 class="page-title">Our Refreshing Drinks</h2>
+                <div class="menu-grid" id="drink-grid">
+                    <!-- Drink items will be loaded here -->
+                </div>
+
+                <h2 class="page-title">Our Tasty Side Dishes</h2>
+                <div class="menu-grid" id="sidedish-grid">
+                    <!-- SideDish items will be loaded here -->
                 </div>
             </div>
         </div>
@@ -121,7 +108,7 @@
                 <div class="about-section">
                     <div>
                         <h2 class="page-title">Our Story</h2>
-                        <p style="margin-bottom: 1rem;">Founded in 2015, Delicious Bites started as a small family restaurant with a big dream: to bring authentic, delicious food to our community. Today, we're proud to serve thousands of happy customers.</p>
+                        <p style="margin-bottom: 1rem;">Founded in 2015, Dapoer Jeng Sri started as a small family restaurant with a big dream: to bring authentic, delicious food to our community. Today, we're proud to serve thousands of happy customers.</p>
                         <p style="margin-bottom: 1rem;">Our chefs use only the freshest ingredients, sourced locally whenever possible. Every dish is prepared with love and attention to detail, ensuring that each bite is a memorable experience.</p>
                         <p>We believe that great food brings people together, and we're honored to be part of your special moments.</p>
                     </div>
@@ -210,9 +197,9 @@
                     <h3>6. Contact Information</h3>
                     <p>For questions about these terms, please contact us at:</p>
                     <ul>
-                        <li>Email: info@deliciousbites.com</li>
-                        <li>Phone: (555) 123-4567</li>
-                        <li>Address: 123 Food Street, Culinary City</li>
+                        <li>Email: dapoerjengsri@gmail.com</li>
+                        <li>Phone: 08982813525</li>
+                        <li>Address: Jl Metal Raya</li>
                     </ul>
                 </div>
             </div>
@@ -221,21 +208,17 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Delicious Bites. All rights reserved.</p>
+            <p>&copy; 2026 Dapoer Jeng Sri. All rights reserved.</p>
             <p>Follow us on social media for updates and special offers!</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
       
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
           apiKey: "AIzaSyCiByrFQgSX8_fLfIxTg8Oo_R1EcCy2xFw",
           authDomain: "dapoerjengsri-aa037.firebaseapp.com",
@@ -246,9 +229,93 @@
           measurementId: "G-1P15TYDBZ3"
         };
       
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
+        getAnalytics(app);
+      
+        const db = getFirestore(app);
+      
+        // 🔽 AMBIL DATA MAKANAN (Food)
+        async function loadFoods() {
+          const foodContainer = document.getElementById("food-grid");
+          foodContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "Food"));
+            querySnapshot.forEach((doc) => {
+              const food = doc.data();
+              foodContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${food.Image}" alt="${food.Name}">
+                  <div class="menu-item-content">
+                    <h3>${food.Name}</h3>
+                    <p>${food.Detail ?? ""}</p>
+                    <p class="price">Rp ${food.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading foods:", error);
+          }
+        }
+      
+        // 🔽 AMBIL DATA MINUMAN (Drink)
+        async function loadDrinks() {
+          const drinkContainer = document.getElementById("drink-grid");
+          drinkContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "Drink"));
+            querySnapshot.forEach((doc) => {
+              const drink = doc.data();
+              drinkContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${drink.Image}" alt="${drink.Name}">
+                  <div class="menu-item-content">
+                    <h3>${drink.Name}</h3>
+                    <p>${drink.Detail ?? ""}</p>
+                    <p class="price">Rp ${drink.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading drinks:", error);
+          }
+        }
+      
+        // 🔽 AMBIL DATA SIDE DISH (SideDish)
+        async function loadSideDishes() {
+          const sideDishContainer = document.getElementById("sidedish-grid");
+          sideDishContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "SideDish"));
+            querySnapshot.forEach((doc) => {
+              const sideDish = doc.data();
+              sideDishContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${sideDish.Image}" alt="${sideDish.Name}">
+                  <div class="menu-item-content">
+                    <h3>${sideDish.Name}</h3>
+                    <p>${sideDish.Detail ?? ""}</p>
+                    <p class="price">Rp ${sideDish.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading side dishes:", error);
+          }
+        }
+      
+        // 🔽 LOAD SEMUA DATA SAAT HALAMAN DIBUKA
+        async function loadMenu() {
+          await Promise.all([loadFoods(), loadDrinks(), loadSideDishes()]);
+        }
+      
+        loadMenu();
       </script>
+      
 </body>
 </html>
