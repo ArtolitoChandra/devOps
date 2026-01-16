@@ -1,13 +1,14 @@
 
-
 services:
   # Your web application
   web:
     build: .
     ports:
-      - "8080:80"
+      - "8081:80"
     container_name: dapoerjengsri-web
     restart: unless-stopped
+    volumes:
+      - ./dapoerjengsriweb:/usr/share/nginx/html  # Live reload - changes reflect immediately
     networks:
       - app-network
   
