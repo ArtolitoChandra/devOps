@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Bites - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>🍽️ Dapoer Jeng Sri</h1>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('discounts')">Discounts</a></li>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('terms')">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page">
+        <div class="hero">
+            <div class="container">
+                <h2>Welcome to Dapoer Jengsri</h2>
+                <p>Experience the finest flavors from around the world</p>
+                <a href="#" onclick="showPage('discounts')" class="btn">View Special Offers</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <h2 class="page-title">Our Popular Dishes</h2>
+                <div class="menu-grid" id="food-grid">
+                    <!-- Food items will be loaded here -->
+                </div>
+
+                <h2 class="page-title">Our Refreshing Drinks</h2>
+                <div class="menu-grid" id="drink-grid">
+                    <!-- Drink items will be loaded here -->
+                </div>
+
+                <h2 class="page-title">Our Tasty Side Dishes</h2>
+                <div class="menu-grid" id="sidedish-grid">
+                    <!-- SideDish items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DISCOUNTS PAGE -->
+    <div id="discounts" class="page hidden">
+        <div class="hero">
+            <div class="container">
+                <h2>Special Discounts</h2>
+                <p>Save big on your favorite meals</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <div class="discount-banner">
+                    <h3>🎉 Limited Time Offers - Don't Miss Out!</h3>
+                </div>
+
+                <div class="discount-grid">
+                    <div class="discount-card">
+                        <div class="discount-percent">20% OFF</div>
+                        <h3>Lunch Special</h3>
+                        <p>Get 20% off on all orders between 11 AM - 3 PM</p>
+                        <p><strong>Valid until:</strong> End of month</p>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-percent">15% OFF</div>
+                        <h3>First Order</h3>
+                        <p>New customers get 15% off their first order</p>
+                        <p><strong>Code:</strong> FIRST15</p>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-percent">25% OFF</div>
+                        <h3>Weekend Feast</h3>
+                        <p>25% off on orders above $50 during weekends</p>
+                        <p><strong>Valid:</strong> Saturdays & Sundays</p>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-percent">BUY 1 GET 1</div>
+                        <h3>Pizza Deal</h3>
+                        <p>Buy one large pizza, get another one free</p>
+                        <p><strong>Valid:</strong> Tuesdays only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT US PAGE -->
+    <div id="about" class="page hidden">
+        <div class="hero">
+            <div class="container">
+                <h2>About Us</h2>
+                <p>Serving happiness since 2015</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <div class="about-section">
+                    <div>
+                        <h2 class="page-title">Our Story</h2>
+                        <p style="margin-bottom: 1rem;">Founded in 2015, Dapoer Jeng Sri started as a small family restaurant with a big dream: to bring authentic, delicious food to our community. Today, we're proud to serve thousands of happy customers.</p>
+                        <p style="margin-bottom: 1rem;">Our chefs use only the freshest ingredients, sourced locally whenever possible. Every dish is prepared with love and attention to detail, ensuring that each bite is a memorable experience.</p>
+                        <p>We believe that great food brings people together, and we're honored to be part of your special moments.</p>
+                    </div>
+                    <div class="about-image">
+                        🍴 Quality Food 🍴
+                    </div>
+                </div>
+
+                <h2 class="page-title">Why Choose Us?</h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <div class="menu-item-content">
+                            <h3>🌟 Quality Ingredients</h3>
+                            <p>We source the finest, freshest ingredients for all our dishes</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-content">
+                            <h3>👨‍🍳 Expert Chefs</h3>
+                            <p>Our experienced chefs bring passion and expertise to every plate</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-content">
+                            <h3>⚡ Fast Service</h3>
+                            <p>Quick preparation and delivery without compromising quality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS PAGE -->
+    <div id="terms" class="page hidden">
+        <div class="hero">
+            <div class="container">
+                <h2>Terms & Conditions</h2>
+                <p>Please read carefully</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <div class="terms-section">
+                    <h3>1. General Terms</h3>
+                    <p>By accessing and using our services, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by the above, please do not use our service.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>2. Orders and Payment</h3>
+                    <ul>
+                        <li>All orders are subject to availability</li>
+                        <li>Payment must be made in full at the time of order</li>
+                        <li>We accept cash, credit cards, and digital payments</li>
+                        <li>Prices are subject to change without notice</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h3>3. Delivery Policy</h3>
+                    <ul>
+                        <li>Delivery times are estimates and not guaranteed</li>
+                        <li>Delivery fee applies based on distance</li>
+                        <li>Please inspect your order upon delivery</li>
+                        <li>Report any issues within 24 hours</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h3>4. Cancellation and Refunds</h3>
+                    <ul>
+                        <li>Orders can be cancelled within 5 minutes of placement</li>
+                        <li>Refunds are processed within 5-7 business days</li>
+                        <li>Custom orders are non-refundable</li>
+                        <li>We reserve the right to refuse service to anyone</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h3>5. Allergies and Dietary Requirements</h3>
+                    <p>Please inform us of any allergies or dietary requirements when ordering. While we take precautions, we cannot guarantee that our dishes are completely free from allergens.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>6. Contact Information</h3>
+                    <p>For questions about these terms, please contact us at:</p>
+                    <ul>
+                        <li>Email: dapoerjengsri@gmail.com</li>
+                        <li>Phone: 08982813525</li>
+                        <li>Address: Jl Metal Raya</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Dapoer Jeng Sri. All rights reserved.</p>
+            <p>Follow us on social media for updates and special offers!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+      
+        const firebaseConfig = {
+          apiKey: "AIzaSyCiByrFQgSX8_fLfIxTg8Oo_R1EcCy2xFw",
+          authDomain: "dapoerjengsri-aa037.firebaseapp.com",
+          projectId: "dapoerjengsri-aa037",
+          storageBucket: "dapoerjengsri-aa037.firebasestorage.app",
+          messagingSenderId: "136656874312",
+          appId: "1:136656874312:web:0c61047a16a1fc3fe0a17d",
+          measurementId: "G-1P15TYDBZ3"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        getAnalytics(app);
+      
+        const db = getFirestore(app);
+      
+        // 🔽 AMBIL DATA MAKANAN (Food)
+        async function loadFoods() {
+          const foodContainer = document.getElementById("food-grid");
+          foodContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "Food"));
+            querySnapshot.forEach((doc) => {
+              const food = doc.data();
+              foodContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${food.Image}" alt="${food.Name}">
+                  <div class="menu-item-content">
+                    <h3>${food.Name}</h3>
+                    <p>${food.Detail ?? ""}</p>
+                    <p class="price">Rp ${food.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading foods:", error);
+          }
+        }
+      
+        // 🔽 AMBIL DATA MINUMAN (Drink)
+        async function loadDrinks() {
+          const drinkContainer = document.getElementById("drink-grid");
+          drinkContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "Drink"));
+            querySnapshot.forEach((doc) => {
+              const drink = doc.data();
+              drinkContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${drink.Image}" alt="${drink.Name}">
+                  <div class="menu-item-content">
+                    <h3>${drink.Name}</h3>
+                    <p>${drink.Detail ?? ""}</p>
+                    <p class="price">Rp ${drink.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading drinks:", error);
+          }
+        }
+      
+        // 🔽 AMBIL DATA SIDE DISH (SideDish)
+        async function loadSideDishes() {
+          const sideDishContainer = document.getElementById("sidedish-grid");
+          sideDishContainer.innerHTML = "";
+      
+          try {
+            const querySnapshot = await getDocs(collection(db, "SideDish"));
+            querySnapshot.forEach((doc) => {
+              const sideDish = doc.data();
+              sideDishContainer.innerHTML += `
+                <div class="menu-item">
+                  <img src="${sideDish.Image}" alt="${sideDish.Name}">
+                  <div class="menu-item-content">
+                    <h3>${sideDish.Name}</h3>
+                    <p>${sideDish.Detail ?? ""}</p>
+                    <p class="price">Rp ${sideDish.Price}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } catch (error) {
+            console.error("Error loading side dishes:", error);
+          }
+        }
+      
+        // 🔽 LOAD SEMUA DATA SAAT HALAMAN DIBUKA
+        async function loadMenu() {
+          await Promise.all([loadFoods(), loadDrinks(), loadSideDishes()]);
+        }
+      
+        loadMenu();
+      </script>
+      
+</body>
+</html>
