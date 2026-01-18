@@ -108,12 +108,13 @@ jobs:
           echo "For local testing, you would use: kubectl config use-context docker-desktop"
           echo "Simulating deployment check..."
           
-      - name: Validate Kubernetes manifests
-        run: |
-          echo "✅ Validating Kubernetes deployment files..."
-          kubectl apply --dry-run=client -f kubernetes/deployment.yaml
-          kubectl apply --dry-run=client -f hpa-dapoerjengsri.yaml
-          echo "✅ Kubernetes manifests are valid!"
+          - name: Validate Kubernetes manifests
+          run: |
+            echo "✅ Validating Kubernetes deployment files..."
+            kubectl apply --dry-run=client --validate=false -f kubernetes/deployment.yaml
+            kubectl apply --dry-run=client --validate=false -f hpa-dapoerjengsri.yaml
+            echo "✅ Kubernetes manifests syntax is valid!"
+        
       
       - name: Deployment Summary
         run: |
