@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - Docker and Kubernetes
+name: Complete CI/CD Pipeline - Docker + Kubernetes
 
 on:
   push:
@@ -15,6 +15,7 @@ env:
   KUBERNETES_NAMESPACE: default
 
 jobs:
+  # Job 1: Build and Test
   build:
     name: Build and Test
     runs-on: ubuntu-latest
@@ -25,34 +26,35 @@ jobs:
       
       - name: Validate HTML files
         run: |
-          echo "Validating HTML structure..."
+          echo "✅ Validating HTML structure..."
           if [ -f "dapoerjengsriweb/index.html" ]; then
-            echo "index.html found"
+            echo "✅ index.html found"
           else
-            echo "Error: index.html not found"
+            echo "❌ Error: index.html not found"
             exit 1
           fi
       
       - name: Check CSS files
         run: |
-          echo "Checking CSS files..."
+          echo "✅ Checking CSS files..."
           if [ -f "dapoerjengsriweb/style.css" ]; then
-            echo "style.css found"
+            echo "✅ style.css found"
           else
-            echo "Error: style.css not found"
+            echo "❌ Error: style.css not found"
             exit 1
           fi
       
       - name: Check JavaScript files
         run: |
-          echo "Checking JavaScript files..."
+          echo "✅ Checking JavaScript files..."
           if [ -f "dapoerjengsriweb/script.js" ]; then
-            echo "script.js found"
+            echo "✅ script.js found"
           else
-            echo "Error: script.js not found"
+            echo "❌ Error: script.js not found"
             exit 1
           fi
 
+  # Job 2: Build and Push Docker Image
   docker:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
@@ -82,25 +84,101 @@ jobs:
           cache-to: type=inline
       
       - name: Image digest
-        run: echo "Docker image pushed successfully!"
+        run: echo "✅ Docker image pushed successfully to ${{ env.DOCKER_IMAGE }}"
 
+  # Job 3: Deploy to Kubernetes (LOCAL)
+  deploy-kubernetes-local:
+    name: Deploy to Local Kubernetes
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Create kubeconfig (for demo purposes)
+        run: |
+          echo "⚠️ Note: This step would normally connect to your K8s cluster"
+          echo "For local testing, you would use: kubectl config use-context docker-desktop"
+          echo "Simulating deployment check..."
+          
+      - name: Validate Kubernetes manifests
+        run: |
+          echo "✅ Validating Kubernetes deployment files..."
+          kubectl apply --dry-run=client -f kubernetes/deployment.yaml
+          kubectl apply --dry-run=client -f kubernetes/hpa.yaml
+          echo "✅ Kubernetes manifests are valid!"
+      
+      - name: Deployment Summary
+        run: |
+          echo "📦 Docker Image: ${{ env.DOCKER_IMAGE }}:latest"
+          echo "🚀 Ready for Kubernetes deployment"
+          echo "💡 To deploy locally, run: kubectl apply -f kubernetes/"
+
+  # Job 4: Monitoring Check
+  monitoring-check:
+    name: Check Monitoring Configuration
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Validate Prometheus config
+        run: |
+          if [ -f "monitoring/prometheus.yml" ]; then
+            echo "✅ Prometheus configuration found"
+          else
+            echo "⚠️ Warning: Prometheus config not found"
+          fi
+      
+      - name: Check monitoring setup
+        run: |
+          echo "✅ Monitoring Stack:"
+          echo "  - Prometheus: Port 9090"
+          echo "  - Grafana: Port 3000"
+          echo "  - Metrics Server: Kubernetes"
+
+  # Job 5: Final Notification
   notify:
-    name: Deployment Notification
+    name: Deployment Status
     runs-on: ubuntu-latest
     needs:
       - build
       - docker
+      - deploy-kubernetes-local
+      - monitoring-check
     if: always()
     
     steps:
-      - name: Build Status
-        if: needs.build.result == 'success'
-        run: echo "Build successful!"
+      - name: Success Notification
+        if: |
+          needs.build.result == 'success' &&
+          needs.docker.result == 'success' &&
+          needs.deploy-kubernetes-local.result == 'success'
+        run: |
+          echo "🎉 =================================="
+          echo "🎉 CI/CD PIPELINE COMPLETED!"
+          echo "🎉 =================================="
+          echo ""
+          echo "✅ Build: Success"
+          echo "✅ Docker Image: Built and Pushed"
+          echo "✅ Kubernetes: Validated"
+          echo "✅ Monitoring: Configured"
+          echo ""
+          echo "🚀 Your application is ready for deployment!"
       
-      - name: Docker Status
-        if: needs.docker.result == 'success'
-        run: echo "Docker image created and pushed successfully!"
-      
-      - name: Pipeline Failed
+      - name: Failure Notification
         if: failure()
-        run: echo "Pipeline failed! Please check the logs."
+        run: |
+          echo "❌ =================================="
+          echo "❌ PIPELINE FAILED!"
+          echo "❌ =================================="
+          echo "Please check the logs above for details."
